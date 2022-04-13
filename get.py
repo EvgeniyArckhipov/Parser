@@ -3,18 +3,19 @@ from bs4 import BeautifulSoup
 import json
 import re
 
-r = requests.get('https://yandex.ru/')
-#print(r.text)
-
-otvet_text = r.content
-print(otvet_text)
-
-zzz = otvet_text.json()
-
-#(otvet_text)
-#with open('primer.txt', 'w', encoding='utf-8') as f:
-#    f.write(otvet_text)
-#pattern = r'''<span class="news__item-content">Путин назвал происходящее на&nbsp;Украине трагедией</span>'''
-#result = re.findall(pattern, otvet_text)
-#print(result)
-
+r = requests.get('https://www.fontanka.ru/incidents/')
+otvet_text = r.text
+# print(type(otvet_text))
+# def zapis_site():
+#     with open('copy_site.txt', 'w', encoding='utf-8') as f:
+#         f.write(otvet_text)
+#
+# with open('copy_site.txt', encoding='utf-8') as site:
+#     q = site.read()
+soup = BeautifulSoup(otvet_text, 'lxml')
+h3 = soup.h3
+po_vsemu = soup.findAll('h3')
+zagalovki = []
+for i in po_vsemu:
+    zagalovki.append(i.text)
+print('\n'.join(zagalovki))
